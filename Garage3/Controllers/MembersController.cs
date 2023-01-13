@@ -27,6 +27,13 @@ namespace Garage3.Controllers
                           Problem("Entity set 'Garage3Context.Member'  is null.");
         }
 
+        public async Task<IActionResult> SelectMember()
+        {
+            return _context.Member != null ?
+                        View(await _context.Member.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Member'  is null.");
+        }
+
         // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -66,6 +73,8 @@ namespace Garage3.Controllers
             }
             return View(member);
         }
+
+
 
         // GET: Members/Edit/5
         public async Task<IActionResult> Edit(int? id)

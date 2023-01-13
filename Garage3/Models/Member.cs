@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace Garage3.Models
 {
@@ -12,9 +13,9 @@ namespace Garage3.Models
 
         public string LastName { get; set; } = string.Empty;
 
-        public List<Vehicle> Vehicles { get; set; }
+        public List<Vehicle>? Vehicles { get; set; }
 
-        public List<Session> Sessions { get; set; }
+        public List<Session>? Sessions { get; set; }
 
     }
 }

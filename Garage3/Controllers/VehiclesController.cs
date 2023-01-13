@@ -48,6 +48,7 @@ namespace Garage3.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
+            ViewBag.VehicleTypeList = _context.VehicleType.ToList();
             return View();
         }
 
@@ -56,10 +57,24 @@ namespace Garage3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MemberId,RegNo,Brand,Model,Color,NoOfWheels")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,MemberId,RegNo,VehicleTypeName,Brand,Model,Color,NoOfWheels")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
+
             {
+                //   string memberIdString = "";
+                //
+                //   if (TempData.ContainsKey("MemberIdData"))
+                //   {
+                //       memberIdString = TempData["MemberIdData"].ToString();
+                //   }
+                //   int memberIdInt = Convert.ToInt32(memberIdString);
+                //   //                TempData["MemberIdData"] = Context.Request.Query["MemberId"];
+                //
+                //   //          var memberIdInt = HttpContext.Request.Query["MemberId"];
+                //   vehicle.MemberId = memberIdInt;
+                var test = TempData["MemberIdData"];
+                vehicle.MemberId = int.Parse(TempData["MemberIdData"] as string);
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +103,7 @@ namespace Garage3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MemberId,RegNo,Brand,Model,Color,NoOfWheels")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MemberId,RegNo, VehicleTypeName,Brand,Model,Color,NoOfWheels")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {

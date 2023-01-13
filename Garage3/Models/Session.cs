@@ -8,7 +8,7 @@
 
         public int VehicleId { get; set; }
 
-        public List<ParkingSpace> ParkingSpaces { get; set; }
+        public List<ParkingSpace>? ParkingSpaces { get; set; }
 
         public DateTime TimeOfArrival { get; set; }
 

@@ -62,13 +62,13 @@ namespace Garage3.Migrations
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vehicle_VehicleType_VehicleTypeId",
-                        column: x => x.VehicleTypeId,
-                        principalTable: "VehicleType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+      //              table.ForeignKey(
+      //                  name: "FK_Vehicle_VehicleType_VehicleTypeId",
+      //                  column: x => x.VehicleTypeId,
+      //                  principalTable: "VehicleType",
+      //                  principalColumn: "Id",
+      //                  onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
