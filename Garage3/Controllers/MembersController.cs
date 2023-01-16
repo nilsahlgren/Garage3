@@ -27,7 +27,14 @@ namespace Garage3.Controllers
                           Problem("Entity set 'Garage3Context.Member'  is null.");
         }
 
-        public async Task<IActionResult> SelectMember()
+        public async Task<IActionResult> SelectMemberForCheckin()
+        {
+            return _context.Member != null ?
+                        View(await _context.Member.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Member'  is null.");
+        }
+
+        public async Task<IActionResult> SelectMemberForRegistration()
         {
             return _context.Member != null ?
                         View(await _context.Member.ToListAsync()) :

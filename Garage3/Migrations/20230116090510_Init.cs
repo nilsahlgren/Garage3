@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Garage3.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,7 +48,7 @@ namespace Garage3.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     RegNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: false),
+                    VehicleTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -62,13 +62,7 @@ namespace Garage3.Migrations
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-      //              table.ForeignKey(
-      //                  name: "FK_Vehicle_VehicleType_VehicleTypeId",
-      //                  column: x => x.VehicleTypeId,
-      //                  principalTable: "VehicleType",
-      //                  principalColumn: "Id",
-      //                  onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +72,7 @@ namespace Garage3.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: true),
                     TimeOfArrival = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimeOfDeparture = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false)
@@ -91,13 +85,12 @@ namespace Garage3.Migrations
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Session_Vehicle_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicle",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -132,17 +125,13 @@ namespace Garage3.Migrations
                 name: "IX_Session_VehicleId",
                 table: "Session",
                 column: "VehicleId",
-                unique: true);
+                unique: true,
+                filter: "[VehicleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_MemberId",
                 table: "Vehicle",
                 column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicle_VehicleTypeId",
-                table: "Vehicle",
-                column: "VehicleTypeId");
         }
 
         /// <inheritdoc />
@@ -152,6 +141,9 @@ namespace Garage3.Migrations
                 name: "ParkingSpace");
 
             migrationBuilder.DropTable(
+                name: "VehicleType");
+
+            migrationBuilder.DropTable(
                 name: "Session");
 
             migrationBuilder.DropTable(
@@ -159,9 +151,6 @@ namespace Garage3.Migrations
 
             migrationBuilder.DropTable(
                 name: "Member");
-
-            migrationBuilder.DropTable(
-                name: "VehicleType");
         }
     }
 }

@@ -62,19 +62,7 @@ namespace Garage3.Controllers
             if (ModelState.IsValid)
 
             {
-                //   string memberIdString = "";
-                //
-                //   if (TempData.ContainsKey("MemberIdData"))
-                //   {
-                //       memberIdString = TempData["MemberIdData"].ToString();
-                //   }
-                //   int memberIdInt = Convert.ToInt32(memberIdString);
-                //   //                TempData["MemberIdData"] = Context.Request.Query["MemberId"];
-                //
-                //   //          var memberIdInt = HttpContext.Request.Query["MemberId"];
-                //   vehicle.MemberId = memberIdInt;
-                var test = TempData["MemberIdData"];
-                vehicle.MemberId = int.Parse(TempData["MemberIdData"] as string);
+                vehicle.MemberId = int.Parse(TempData["MemberIdData"].ToString());
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

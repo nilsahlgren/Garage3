@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Create";
     var vehicleTypesList = new SelectList(ViewBag.VehicleTypeList, "Name", "Name");
-    TempData["MemberIdData"] = Context.Request.Query["MemberId"];
+    //TempData["MemberIdData"] = Context.Request.Query["MemberId"];
+    TempData["MemberIdData"] = Context.Request.Query["MemberId"].ToList().FirstOrDefault();
     TempData.Keep();
 }
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20230112153330_init")]
-    partial class init
+    [Migration("20230116090510_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,7 @@ namespace Garage3.Migrations
                     b.Property<DateTime>("TimeOfDeparture")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -96,7 +96,8 @@ namespace Garage3.Migrations
                     b.HasIndex("MemberId");
 
                     b.HasIndex("VehicleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[VehicleId] IS NOT NULL");
 
                     b.ToTable("Session");
                 });
@@ -131,14 +132,13 @@ namespace Garage3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("VehicleTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MemberId");
-
-                    b.HasIndex("VehicleTypeId");
 
                     b.ToTable("Vehicle");
                 });
@@ -180,9 +180,7 @@ namespace Garage3.Migrations
 
                     b.HasOne("Garage3.Models.Vehicle", null)
                         .WithOne("Session")
-                        .HasForeignKey("Garage3.Models.Session", "VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Garage3.Models.Session", "VehicleId");
                 });
 
             modelBuilder.Entity("Garage3.Models.Vehicle", b =>
@@ -192,14 +190,6 @@ namespace Garage3.Migrations
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Garage3.Models.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("Garage3.Models.Member", b =>
@@ -216,8 +206,7 @@ namespace Garage3.Migrations
 
             modelBuilder.Entity("Garage3.Models.Vehicle", b =>
                 {
-                    b.Navigation("Session")
-                        .IsRequired();
+                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }
