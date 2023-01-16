@@ -58,8 +58,26 @@ namespace Garage3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,MemberId,VehicleId,TimeOfArrival,TimeOfDeparture,Price")] Session session)
         {
+            session.MemberId = int.Parse(TempData["MemberIdData"].ToString());
+            session.VehicleId = int.Parse(TempData["VehicleIdData"].ToString());
+            session.TimeOfArrival = DateTime.Now;
+            var vehicle = await _context.Vehicle
+            .FirstOrDefaultAsync(v => v.Id == session.VehicleId);
+            var vehicleType = await _context.VehicleType.FirstOrDefaultAsync(t => t.Name == vehicle.VehicleTypeName);
+            int firstFreeSpaceId = ParkingSpaceFinder(vehicleType.Size);
+
+            if (firstFreeSpaceId < 999)
+            {
+                session.ParkingSpaces = new List<ParkingSpace>();
+                for (var i = 0; i < vehicleType.Size; i++)
+                {
+                    ParkingSpace chosenSpace = await _context.ParkingSpace.FirstOrDefaultAsync(p => p.Id == (firstFreeSpaceId+i));
+                    session.ParkingSpaces.Add(chosenSpace);
+                }
+            }
             if (ModelState.IsValid)
             {
+
                 _context.Add(session);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,8 +85,50 @@ namespace Garage3.Controllers
             return View(session);
         }
 
-        // GET: Sessions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public int ParkingSpaceFinder(int size)
+        {
+            int firstFreeSpaceId = 999;
+            var activeSessions = _context.Session.Where(s => s.TimeOfDeparture == null).ToList();
+            int numberOfSpaces = _context.ParkingSpace.ToList().Count;
+            string[] spaceStatus = new string[numberOfSpaces+1];
+            int spaceStatusCount = spaceStatus.Length;
+            if (activeSessions != null)
+            {
+                    for (var j = 0; j < activeSessions.Count; j++)
+                    {
+                        foreach (ParkingSpace p in activeSessions[j].ParkingSpaces)
+                        {
+                           spaceStatus[p.Id] = "taken";
+                        }
+                    }
+            }
+
+            for (var i = 1; i <= numberOfSpaces; i++)
+            {
+                var freeAdjacent = 0;
+                for (var j = 0; j < size; j++)
+                {
+                    if (i + j <= numberOfSpaces)
+                    {
+                        if (spaceStatus[i + j] != "taken")
+                        {
+                            freeAdjacent++;
+                        }
+                    }
+                }
+                if (size <= freeAdjacent)
+                {
+                    firstFreeSpaceId = i;
+                    break;
+                }
+            }
+
+            return firstFreeSpaceId;
+        }
+
+
+// GET: Sessions/Edit/5
+public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Session == null)
             {

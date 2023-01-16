@@ -57,9 +57,8 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicles =  _context.Vehicle.Where(v => v.MemberId == member.Id).ToList();                         
+            var vehicles =  _context.Vehicle.Where(v => v.MemberId == member.Id).ToList();
 
-           // var vehicles = member.Vehicles;
 
             return View(vehicles);
         }

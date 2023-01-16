@@ -66,16 +66,6 @@ namespace Garage3.Controllers
                 _context.Add(vehicle);
                 var member = await _context.Member
                 .FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
-                
-            //   if (member.Vehicles == null)
-            //   {
-            //       List<Vehicle> vehicleList = new List<Vehicle>();
-            //       vehicleList.Add(vehicle);
-            //       member.Vehicles = vehicleList;
-            //   } else
-            //   {
-            //       member.Vehicles.Add(vehicle);
-            //   }
 
                 await _context.SaveChangesAsync();
 
