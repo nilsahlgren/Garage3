@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Garage3.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Select vehicle";
+    TempData["MemberIdData"] = Context.Request.Query["MemberId"].ToList().FirstOrDefault();
+    TempData.Keep();
+}
+
+<h1>Select vehicle to park</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RegNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfWheels)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfWheels)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Park</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

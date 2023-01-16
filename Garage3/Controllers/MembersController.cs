@@ -36,9 +36,29 @@ namespace Garage3.Controllers
 
         public async Task<IActionResult> SelectMemberForRegistration()
         {
+
             return _context.Member != null ?
                         View(await _context.Member.ToListAsync()) :
                         Problem("Entity set 'Garage3Context.Member'  is null.");
+        }
+
+        public async Task<IActionResult> SelectVehicle(int? id)
+        {
+            if (id == null || _context.Member == null)
+            {
+                return NotFound();
+            }
+
+            var member = await _context.Member
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            var vehicles = member.Vehicles;
+
+            return View(vehicles);
         }
 
         // GET: Members/Details/5
