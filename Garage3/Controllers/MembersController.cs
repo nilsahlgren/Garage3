@@ -51,12 +51,15 @@ namespace Garage3.Controllers
 
             var member = await _context.Member
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (member == null)
             {
                 return NotFound();
             }
 
-            var vehicles = member.Vehicles;
+            var vehicles =  _context.Vehicle.Where(v => v.MemberId == member.Id).ToList();                         
+
+           // var vehicles = member.Vehicles;
 
             return View(vehicles);
         }
