@@ -13,6 +13,15 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkingSpaces)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.TimeOfArrival)
             </th>
             <th>
@@ -27,6 +36,19 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.VehicleId)
+            </th>
+            <th>
+        @*
+           @foreach (var p in item.ParkingSpaces)
+                {
+                    @Html.DisplayFor(modelItem => p.Id)
+                } *@
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeOfArrival)
             </td>

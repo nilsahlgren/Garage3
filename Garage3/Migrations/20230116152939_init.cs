@@ -62,7 +62,7 @@ namespace Garage3.Migrations
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,12 +85,13 @@ namespace Garage3.Migrations
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Session_Vehicle_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicle",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,7 +109,8 @@ namespace Garage3.Migrations
                         name: "FK_ParkingSpace_Session_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Session",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

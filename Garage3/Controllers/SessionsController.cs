@@ -72,15 +72,17 @@ namespace Garage3.Controllers
                 for (var i = 0; i < vehicleType.Size; i++)
                 {
                     ParkingSpace chosenSpace = await _context.ParkingSpace.FirstOrDefaultAsync(p => p.Id == (firstFreeSpaceId+i));
+                    chosenSpace.SessionId = session.Id;
                     session.ParkingSpaces.Add(chosenSpace);
                 }
-            }
-            if (ModelState.IsValid)
-            {
 
-                _context.Add(session);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(session);
+                    vehicle.Session = session;
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(session);
         }
@@ -88,7 +90,7 @@ namespace Garage3.Controllers
         public int ParkingSpaceFinder(int size)
         {
             int firstFreeSpaceId = 999;
-            var activeSessions = _context.Session.Where(s => s.TimeOfDeparture == null).ToList();
+            var activeSessions = _context.Session.Where(s => s.TimeOfDeparture < DateTime.Now).ToList();
             int numberOfSpaces = _context.ParkingSpace.ToList().Count;
             string[] spaceStatus = new string[numberOfSpaces+1];
             int spaceStatusCount = spaceStatus.Length;
