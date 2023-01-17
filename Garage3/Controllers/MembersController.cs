@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
+using System.Globalization;
 
 namespace Garage3.Controllers
 {
@@ -29,8 +30,32 @@ namespace Garage3.Controllers
 
         public async Task<IActionResult> SelectMemberForCheckin()
         {
-            return _context.Member != null ?
-                        View(await _context.Member.ToListAsync()) :
+
+            int ageLimit = int
+                   .Parse(DateTime.Today
+                   .AddYears(-18)
+                   .ToString()
+                   .Replace("-", string.Empty)
+                   .Substring(0, 8));
+
+            var allMembers = await _context.Member.ToListAsync();
+            var membersOfAge = new List<Member>();
+
+            foreach (var member in allMembers)
+            {
+                int ageCandidate = int
+                    .Parse(member.PersNo
+                    .Replace("-", string.Empty)
+                    .Substring(0, 8));
+
+                if (ageCandidate <= ageLimit)
+                {
+                    membersOfAge.Add(member);
+                }
+            }
+
+            return membersOfAge != null ?
+                        View(membersOfAge.ToList()) :
                         Problem("Entity set 'Garage3Context.Member'  is null.");
         }
 
@@ -57,7 +82,7 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicles =  _context.Vehicle.Include(v => v.Session);
+            var vehicles = _context.Vehicle.Include(v => v.Session);
             var unparkedVehicles = vehicles.Where(v => v.Session == null);
             var memberUnparkedVehicles = unparkedVehicles.Where(v => v.MemberId == id).ToList();
 
