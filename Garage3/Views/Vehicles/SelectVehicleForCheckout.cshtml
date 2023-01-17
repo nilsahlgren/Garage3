@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Garage3.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Select Vehicle";
+}
+
+<h1>Select Vehicle for Checkout</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Session.TimeOfArrival)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.TimeOfArrival)
+                </td>
+                <td>
+                    <a asp-action="ConfirmCheckout" asp-route-id="@item.Id">Select</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

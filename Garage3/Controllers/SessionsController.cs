@@ -27,6 +27,13 @@ namespace Garage3.Controllers
                           Problem("Entity set 'Garage3Context.Session'  is null.");
         }
 
+        public async Task<IActionResult> Checkout(int? id)
+        {
+            var allSessions = _context.Session.Include(s => s.ParkingSpaces);
+            var selectedSession = await allSessions.FirstOrDefaultAsync(s => s.Id == id);
+            return View(selectedSession);
+        }
+
         // GET: Sessions/Details/5
         public async Task<IActionResult> Details(int? id)
         {

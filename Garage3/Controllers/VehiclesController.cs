@@ -27,6 +27,20 @@ namespace Garage3.Controllers
                           Problem("Entity set 'Garage3Context.Vehicle'  is null.");
         }
 
+        public async Task<IActionResult> SelectVehicleForCheckout()
+        {
+            var allVehicles = _context.Vehicle.Include(v => v.Session);
+            var parkedVehicles = allVehicles.Where(v => v.Session != null);
+            return View(await parkedVehicles.ToListAsync());
+        }
+
+        public async Task<IActionResult> ConfirmCheckout(int? id)
+        {
+            var allVehicles = _context.Vehicle.Include(v => v.Session);
+            var selectedVehicle = await allVehicles.FirstOrDefaultAsync(v => v.Id == id);
+            return View(selectedVehicle);
+        }
+
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
