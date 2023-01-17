@@ -27,6 +27,45 @@ namespace Garage3.Controllers
                           Problem("Entity set 'Garage3Context.Vehicle'  is null.");
         }
 
+
+        
+
+        public async Task<IActionResult> Overview(string regNo, string vehicleTypeName)
+        {
+            var vehicles = from v in _context.Vehicle
+                           select v;
+            if (!String.IsNullOrEmpty(regNo))
+            {
+                vehicles = vehicles.Where(v => v.RegNo.Contains(regNo));
+            }
+            
+            if (!String.IsNullOrEmpty(vehicleTypeName))
+            {
+                vehicles = vehicles.Where(v => v.VehicleTypeName.Contains(vehicleTypeName));
+            }
+
+            return View(await vehicles.ToListAsync());
+        }
+
+        /*
+         public async Task<IActionResult> Index(string category)
+        {
+
+            var products = from p in _context.Product
+                         select p;
+
+            if (!String.IsNullOrEmpty(category))
+            {
+                products = products.Where(s => s.Category == category);
+            }
+
+          return View(await products.ToListAsync());
+        }
+         
+         
+         */
+
+
         public async Task<IActionResult> SelectVehicleForCheckout()
         {
             var allVehicles = _context.Vehicle.Include(v => v.Session);
