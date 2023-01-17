@@ -10,7 +10,6 @@ namespace Garage3.Models
 
         [Required]
         [DisplayName("Pers.Number")]
-        //[RegularExpression(@"^(\d{8})-(\d{4})$",
         [RegularExpression(@"^(\d{4})(\d{2})(\d{2})-(\d{4})$",
             ErrorMessage = "Must be in format YYYYMMDD-XXXX.")]
         public string PersNo { get; set; } = string.Empty;
@@ -23,7 +22,6 @@ namespace Garage3.Models
         [Required]
         [DisplayName("Last Name")]
         [StringLength(18)]
-        //[Compare("FirstName", ErrorMessage = "First name and Last name do not match")]
         public string LastName { get; set; } = string.Empty;
 
         public List<Vehicle>? Vehicles { get; set; }

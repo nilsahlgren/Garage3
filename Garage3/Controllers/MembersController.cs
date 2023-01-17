@@ -95,6 +95,11 @@ namespace Garage3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PersNo,FirstName,LastName")] Member member)
         {
+            if (member.FirstName == member.LastName)
+            {
+                ViewData["DoubleName"] = member.FirstName;
+                return View(member);
+            }
             if (ModelState.IsValid)
             {
                 var allMembers = _context.Member;

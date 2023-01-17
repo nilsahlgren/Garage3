@@ -6,13 +6,20 @@
 
 <h1>Create</h1>
 
-
 <div id="persNoError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
      A member with the following  Personal number:
     <strong>@ViewData["MemberAlreadyExists"]</strong> already exists. <br /> Only one account per member is allowed.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
     </button>
 </div>
+
+<div id="nameError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
+     A member is not allowed to have same first and last names. Change either from
+    <strong>@ViewData["DoubleName"]</strong> to something else.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>
+
 <h4>Member</h4>
 <hr />
 <div class="row">
@@ -45,6 +52,28 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@if (ViewData["DoubleName"] != null)
+{
+    <script>
+        function showError()
+        {
+            element.removeAttribute("hidden");
+        }
+        let element = document.querySelector("#nameError");
+        let button = document.querySelector("#createButton")
+        button.addEventListener('submit', showError)
+
+        showError();
+    </script>
+}
+
+else
+{
+    <script>
+        document.querySelector("#nameError").setAttribute("hidden", "hidden");
+    </script>
+}
+
 @if (ViewData["MemberAlreadyExists"] != null)
 {
     <script>
@@ -68,6 +97,7 @@ else
         document.querySelector("#persNoError").setAttribute("hidden", "hidden");
     </script>
 }
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
