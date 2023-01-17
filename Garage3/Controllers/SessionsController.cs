@@ -23,7 +23,7 @@ namespace Garage3.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Session != null ? 
-                          View(await _context.Session.ToListAsync()) :
+                          View(await _context.Session.Include(s => s.ParkingSpaces).ToListAsync()) :
                           Problem("Entity set 'Garage3Context.Session'  is null.");
         }
 
@@ -90,7 +90,7 @@ namespace Garage3.Controllers
         public int ParkingSpaceFinder(int size)
         {
             int firstFreeSpaceId = 999;
-            var activeSessions = _context.Session.Where(s => s.TimeOfDeparture < DateTime.Now).ToList();
+            var activeSessions = _context.Session.Where(s => s.TimeOfDeparture < s.TimeOfArrival).ToList();
             int numberOfSpaces = _context.ParkingSpace.ToList().Count;
             string[] spaceStatus = new string[numberOfSpaces+1];
             int spaceStatusCount = spaceStatus.Length;
@@ -124,7 +124,6 @@ namespace Garage3.Controllers
                     break;
                 }
             }
-
             return firstFreeSpaceId;
         }
 
