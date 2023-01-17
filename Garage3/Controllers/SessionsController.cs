@@ -30,8 +30,24 @@ namespace Garage3.Controllers
         public async Task<IActionResult> Checkout(int? id)
         {
             var allSessions = _context.Session.Include(s => s.ParkingSpaces);
-            var selectedSession = await allSessions.FirstOrDefaultAsync(s => s.Id == id);
-            return View(selectedSession);
+            var session = await allSessions.FirstOrDefaultAsync(s => s.Id == id);
+            session.TimeOfDeparture = DateTime.Now;
+
+            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == session.VehicleId);
+            vehicle.Session = null;
+
+            var parkingSpaces = _context.ParkingSpace.Where(p => p.SessionId == session.Id);
+            foreach (ParkingSpace p in parkingSpaces)
+            {
+                p.SessionId = null;
+            }
+    /*        var allMembers = _context.Member.Include(m => m.Sessions);
+            var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == session.MemberId);
+            member.Sessions.Add(session); */
+
+
+            await _context.SaveChangesAsync();
+            return View(session);
         }
 
         // GET: Sessions/Details/5
