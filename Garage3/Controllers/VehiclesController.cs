@@ -47,25 +47,6 @@ namespace Garage3.Controllers
             return View(await vehicles.ToListAsync());
         }
 
-        /*
-         public async Task<IActionResult> Index(string category)
-        {
-
-            var products = from p in _context.Product
-                         select p;
-
-            if (!String.IsNullOrEmpty(category))
-            {
-                products = products.Where(s => s.Category == category);
-            }
-
-          return View(await products.ToListAsync());
-        }
-         
-         
-         */
-
-
         public async Task<IActionResult> SelectVehicleForCheckout()
         {
             var allVehicles = _context.Vehicle.Include(v => v.Session);
