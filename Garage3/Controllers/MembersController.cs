@@ -22,9 +22,9 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-              return _context.Member != null ? 
-                          View(await _context.Member.ToListAsync()) :
-                          Problem("Entity set 'Garage3Context.Member'  is null.");
+            return _context.Member != null ?
+                        View(await _context.Member.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Member'  is null.");
         }
 
         public async Task<IActionResult> SelectMemberForCheckin()
@@ -97,14 +97,24 @@ namespace Garage3.Controllers
         {
             if (ModelState.IsValid)
             {
+                var allMembers = _context.Member;
+
+                foreach (var memberExist in allMembers)
+                {
+                    if (memberExist.PersNo.Contains(member.PersNo))
+                    {
+                        ViewData["MemberAlreadyExists"] = member.PersNo;
+                        return View(member);
+                    }
+                }
+
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
             return View(member);
         }
-
-
 
         // GET: Members/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -189,14 +199,14 @@ namespace Garage3.Controllers
             {
                 _context.Member.Remove(member);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MemberExists(int id)
         {
-          return (_context.Member?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Member?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
