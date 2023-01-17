@@ -47,10 +47,17 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NoOfWheels)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Session.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Session.Id)
+        </dd>
+
     </dl>
 
     <form asp-controller="Sessions" asp-action="Checkout" asp-route-id="@Model.Session.Id">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="@Model.Session.Id" />
         <input type="submit" value="Confirm" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

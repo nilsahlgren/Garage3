@@ -45,7 +45,6 @@ namespace Garage3.Controllers
             var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == session.MemberId);
             member.Sessions.Add(session); */
 
-
             await _context.SaveChangesAsync();
             return View(session);
         }

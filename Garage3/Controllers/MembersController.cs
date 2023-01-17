@@ -42,7 +42,7 @@ namespace Garage3.Controllers
                         Problem("Entity set 'Garage3Context.Member'  is null.");
         }
 
-        public async Task<IActionResult> SelectVehicle(int? id)
+        public async Task<IActionResult> SelectVehicleForCheckIn(int? id)
         {
             if (id == null || _context.Member == null)
             {
@@ -57,10 +57,11 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicles =  _context.Vehicle.Where(v => v.MemberId == member.Id).ToList();
+            var vehicles =  _context.Vehicle.Include(v => v.Session);
+            var unparkedVehicles = vehicles.Where(v => v.Session == null);
+            var memberUnparkedVehicles = unparkedVehicles.Where(v => v.MemberId == id).ToList();
 
-
-            return View(vehicles);
+            return View(memberUnparkedVehicles);
         }
 
         // GET: Members/Details/5
