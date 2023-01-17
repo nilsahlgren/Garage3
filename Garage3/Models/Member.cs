@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 
 namespace Garage3.Models
@@ -7,6 +8,9 @@ namespace Garage3.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [RegularExpression(@"^(\d{8})-(\d{4})$",
+            ErrorMessage = "Characters are not allowed.")]
         public string PersNo { get; set; } = string.Empty;
 
         public string FirstName { get; set; } = string.Empty;
