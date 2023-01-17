@@ -1,11 +1,18 @@
 ﻿@model Garage3.Models.Member
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create member";    
 }
 
 <h1>Create</h1>
 
+
+<div id="persNoError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
+     A member with the following  Personal number:
+    <strong>@ViewData["MemberAlreadyExists"]</strong> already exists. <br /> Only one account per member is allowed.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>
 <h4>Member</h4>
 <hr />
 <div class="row">
@@ -28,7 +35,7 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" id="createButton" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -38,6 +45,29 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@if (ViewData["MemberAlreadyExists"] != null)
+{
+    <script>
+
+        function showError() {
+            element.removeAttribute("hidden");
+
+        }
+
+        let element = document.querySelector("#persNoError");
+        let button = document.querySelector("#createButton")
+        button.addEventListener('submit', showError)
+
+        showError();
+    </script>
+}
+
+else
+{
+    <script>
+        document.querySelector("#persNoError").setAttribute("hidden", "hidden");
+    </script>
+}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

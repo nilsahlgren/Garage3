@@ -102,7 +102,7 @@ namespace Garage3.Controllers
                 {
                     if (memberExist.PersNo.Contains(member.PersNo))
                     {
-                        ViewData["MemberAlreadyExists"] = "Only one account per member is allowed.";
+                        ViewData["MemberAlreadyExists"] = member.PersNo;
                         return View(member);
                     }
                 }

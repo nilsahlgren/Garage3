@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+let element = document.querySelector("#print");
+function printReceipt() {
+    window.print();
+}
+element.addEventListener('click', printReceipt);
