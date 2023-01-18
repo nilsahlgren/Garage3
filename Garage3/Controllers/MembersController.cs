@@ -41,7 +41,6 @@ namespace Garage3.Controllers
             {
                 members = members.Where(mem => mem.LastName.Contains(lastName));
             }
-
             return View(await members
                 .Include(veh => veh.Vehicles)
                 .OrderBy(name => name.FirstName)
