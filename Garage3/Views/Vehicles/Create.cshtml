@@ -10,8 +10,13 @@
 
 <h1>Create</h1>
 
-<h4>Vehicle</h4>
-<h3>@Context.Request.Query["MemberId"]</h3>
+<h3>New vehicle for member #@Context.Request.Query["MemberId"]</h3>
+
+@*<div id="regNoError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
+     Vehicle with registration number <strong>@ViewData["RegNoAlreadyExists"]</strong> already exists. <br /> Please enter a unique one.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>*@
 
 <hr />
 <div class="row">
@@ -66,8 +71,30 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Overview">Back to List</a>
 </div>
+
+@*@if (ViewData["RegNoAlreadyExists"] != null)
+{
+    <script>
+        function showError()
+        {
+            element.removeAttribute("hidden");
+        }
+        let element = document.querySelector("#regNoError");
+        let button = document.querySelector("#createButton")
+        button.addEventListener('submit', showError)
+
+        showError();
+    </script>
+}
+
+else
+{
+    <script>
+        document.querySelector("#regNoError").setAttribute("hidden", "hidden");
+    </script>
+}*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

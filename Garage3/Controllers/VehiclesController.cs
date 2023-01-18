@@ -96,6 +96,17 @@ namespace Garage3.Controllers
             if (ModelState.IsValid)
 
             {
+                //var allVehicles = _context.Vehicle;
+
+                //foreach (var regNoExist in allVehicles)
+                //{
+                //    if (regNoExist.RegNo == vehicle.RegNo)
+                //    {
+                //        ViewData["RegNoAlreadyExists"] = vehicle.RegNo;
+                //        return View(vehicle);
+                //    }
+                //}
+
                 vehicle.MemberId = int.Parse(TempData["MemberIdData"].ToString());
                 _context.Add(vehicle);
                 var member = await _context.Member
@@ -103,7 +114,7 @@ namespace Garage3.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Overview));
             }
             return View(vehicle);
         }
