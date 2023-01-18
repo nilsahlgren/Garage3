@@ -18,8 +18,8 @@ namespace Garage3.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,9 +49,9 @@ namespace Garage3.Migrations
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     RegNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VehicleTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     NoOfWheels = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Garage3.Models.Member>
+
+@{
+    ViewData["Title"] = "MemberOverview";
+}
+
+<h1>Member overview</h1>
+
+<form asp-controller="Members" asp-action="MemberOverview">
+    <p>
+        Search by personal number: <input type="text" name="PersNo" placeholder="Search contains this" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<form asp-controller="Members" asp-action="MemberOverview">
+    <p>
+        Search by last name: <input type="text" name="LastName" placeholder="Search contains this" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                Reg. vehicles
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    Noll tillsvidare
+                </td>
+                <td>
+                    <a asp-action="MemberVehicleList" asp-route-id="@item.Id">List vehicles</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

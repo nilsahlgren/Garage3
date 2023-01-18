@@ -25,8 +25,50 @@ namespace Garage3.Controllers
         {
             return _context.Member != null ?
                         View(await _context.Member.ToListAsync()) :
-                        Problem("Entity set 'Garage3Context.Member'  is null.");
+                        Problem("Entity set 'Garage3Context.Member' is null.");
         }
+
+        // Members Overview with search for PersNo and LastName
+        public async Task<IActionResult> MemberOverview(string persNo, string lastName)
+        {
+            var members = from mem in _context.Member select mem;
+            if (!String.IsNullOrEmpty(persNo))
+            {
+                members = members.Where(mem => mem.PersNo.Contains(persNo));
+            }
+
+            if (!String.IsNullOrEmpty(lastName))
+            {
+                members = members.Where(mem => mem.LastName.Contains(lastName));
+            }
+
+            return View(await members
+                .OrderBy(name => name.FirstName)
+                .ToListAsync());
+        }
+
+        // List of individual membe's vehicles
+        public async Task<IActionResult> MemberVehicleList(int? id)
+        {
+            if (id == null || _context.Member == null)
+            {
+                return NotFound();
+            }
+            var member = await _context.Member
+                .FirstOrDefaultAsync(mem => mem.Id == id);
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+            var vehicles = _context.Vehicle
+                .Include(veh => veh.Session);
+            var memberVehicles = vehicles
+                .Where(veh => veh.MemberId == id)
+                .ToList();
+            return View(memberVehicles);
+        }
+
 
         public async Task<IActionResult> SelectMemberForCheckin()
         {
