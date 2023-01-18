@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Garage3.Models.Session>
+@{
+    ViewData["Title"] = "Receipt";
+
+    DateTime park = Model.TimeOfArrival;
+    DateTime depart = DateTime.Now;
+    TimeSpan parkTimeSpan = depart - park;
+
+    int parkTimeMinutes = (int)Math.Round(parkTimeSpan.TotalMinutes);
+
+    int startingCost = 160, CostPerMinute = 1, arrivalFee = 65, registrationFee = 45, receiptFee = 120;
+    int parkingCost = parkTimeMinutes * CostPerMinute;
+    int totalCost = startingCost + parkingCost + arrivalFee + registrationFee + receiptFee;
+}
+<div class="container" style="margin-top: 2rem; width: 100%;">
+    <div class="card border-dark mb-3 card-extension">
+        <div class="card-header center">
+            <h2 class="card-title card-title-extension">Parkeringshuset</h2>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="25%"
+                 height="25%"
+                 fill="#2fa4e7"
+                 class="bi bi-p-circle center"
+                 viewBox="0 0 16 16">
+                <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z" />
+            </svg>
+        </div>
+        <div class="card-body">            
+          
+            <p class="card-text leftRight"><span>Organisation no:</span><span>625143-9472</span></p>
+            <p class="card-text leftRight">
+                <span>Mail:</span>
+                <a href="mailto: dummy@fake.mail">kundtjanst@parkeringshuset.se</a>
+            </p>
+            <p class="card-text leftRight"><span>Phone no:</span><span>08-555 555 55</span></p>
+            <hr role="separator" class="separator" />
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <h6 class="card-title font-color-receipt leftRight">
+                <span>@Html.DisplayFor(model => model.VehicleType):</span>
+                <span>@Html.DisplayFor(model => model.RegNo)</span>
+            </h6>
+            <p></p>
+            <p class="card-text leftRight"><span>Entry time:</span> <span>@Html.DisplayFor(model => model.TimeOfArrival)</span></p>
+            <p class="card-text leftRight"><span>Exit time:</span>  <span>@DateTime.Now</span></p>
+            <p class="card-text leftRight"><span>Duration:</span>   <span>@parkTimeSpan.Days days @parkTimeSpan.Hours hours @parkTimeSpan.Minutes minutes</span></p>
+            <p class="card-text leftRight"><span>In minutes:</span> <span>@parkTimeMinutes</span></p>
+            <p class="card-text leftRight"><span>Customer ID:</span><span>@Html.DisplayFor(model => model.VehicleType) @park.Microsecond 400-@Html.DisplayFor(model => model.Id)</span></p>
+            <p class="card-text leftRight">
+                <span>Starting cost:</span>
+                <span>SEK @startingCost</span>
+            </p>
+
+            <p class="card-text leftRight">
+                <span>Minutes cost:</span>
+                <span>SEK @parkingCost</span>
+            </p>
+          
+            <p class="card-text leftRight">
+                <span>Arrival fee:</span>
+                <span>SEK @arrivalFee</span>
+            </p>
+            <p class="card-text leftRight">
+                <span>Registration fee:</span>
+                <span>SEK @registrationFee</span>
+            </p>
+            <p class="card-text leftRight">
+                <span>  Receipt fee:</span>
+                <span>SEK @receiptFee</span>
+            </p>
+            <p class="card-text"></p>
+            <hr role="separator" class="separator"/>
+            <h6 class="text-black leftRight">
+                <span>Total:</span>
+                <span>SEK @totalCost</span>
+            </h6>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+        </div>
+    </div>
+    <div class="center">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Checkout" class="btn btn-danger" /> |
+            <input type="button" id="print" value="Print" class="btn btn-info" /> |
+            <a asp-action="Index" class="btn btn-primary">Overview</a>
+        </form>
+    </div>
+</div>
