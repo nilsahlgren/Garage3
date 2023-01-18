@@ -52,8 +52,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
-                <td>
-                    Noll tillsvidare
+                <td style="text-align:center">
+                    @item.Vehicles.Count
                 </td>
                 <td>
                     <a asp-action="MemberVehicleList" asp-route-id="@item.Id">List vehicles</a> |

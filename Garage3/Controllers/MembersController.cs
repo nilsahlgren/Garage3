@@ -43,6 +43,7 @@ namespace Garage3.Controllers
             }
 
             return View(await members
+                .Include(veh => veh.Vehicles)
                 .OrderBy(name => name.FirstName)
                 .ToListAsync());
         }
