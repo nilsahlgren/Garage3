@@ -4,11 +4,11 @@
     ViewData["Title"] = "Sessions Overview";
     ViewData["NotParked"] = "Not Parked";
 }
-Create a membership account
+<br />
 <h2>Sessions Overview</h2>
 
 <p>
-    <a asp-controller="Members" asp-action="SelectMemberForCheckin">Park another vehicle</a>
+    <a class="btn btn-primary" asp-controller="Members" asp-action="SelectMemberForCheckin">Park another vehicle</a>
 </p>
 <table class="table">
     <thead>
@@ -69,9 +69,9 @@ Create a membership account
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                  @*  <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }

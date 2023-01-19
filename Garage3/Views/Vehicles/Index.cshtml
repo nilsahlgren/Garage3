@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Garage3.Models.Vehicle>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vehicles";
 }
 <br />
-<h2>Index</h2>
+<h2>Vehicles</h2>
 
 <p>
-    <a asp-controller="Members" asp-action="SelectMemberForRegistration">Create New</a>
+    <a class="btn btn-primary" asp-controller="Members" asp-action="SelectMemberForRegistration">Select a member to register a vehicle</a>
 </p>
 <table class="table">
     <thead>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.NoOfWheels)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+               @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
 }

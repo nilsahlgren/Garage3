@@ -7,11 +7,11 @@
     TempData["MemberIdData"] = Context.Request.Query["MemberId"].ToList().FirstOrDefault();
     TempData.Keep();
 }
+<br />
+<h2>Create a vehicle</h2>
 
-<h2>Create</h2>
 
-<h4>Vehicle</h4>
-<h3>@Context.Request.Query["MemberId"]</h3>
+<h3>Membership account no: @Context.Request.Query["MemberId"]</h3>
 
 <hr />
 <div class="row">
@@ -59,14 +59,14 @@
                 <span asp-validation-for="NoOfWheels" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary top-bottom-margin" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary top-bottom-margin" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

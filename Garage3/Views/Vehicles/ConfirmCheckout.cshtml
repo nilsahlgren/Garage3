@@ -6,9 +6,9 @@
 <br />
 <h2>Confirm Checkout</h2>
 
-<h3>Are you sure you want to checkout this vehicle?</h3>
+<h4>Are you sure you want to checkout this vehicle?</h4>
 <div>
-    <h4>Vehicle</h4>
+    
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -59,6 +59,6 @@
     <form asp-controller="Sessions" asp-action="Checkout" asp-route-id="@Model.Session.Id">
         <input type="hidden" asp-for="@Model.Session.Id" />
         <input type="submit" value="Confirm" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-primary" asp-action="Index">Back to List</a>
     </form>
 </div>
