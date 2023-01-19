@@ -2,48 +2,73 @@
 
 @{
     ViewData["Title"] = "Checkout";
+
+    // <<< Previous step was from VechiclesController: ConfirmCheckout(int? id).
+
+    //  CURRENT STEP is SessionsController: Checkout(int? id).
+
+    // >>> Next step is SessionsController: Receipt(int? id).
+
+    string parkingSpaces = "";
+    int numberOfParkingSpaces = 0;
+
+    if (TempData.ContainsKey("SessionNumberOfParkingSpaces"))
+    {
+        parkingSpaces = TempData["SessionNumberOfParkingSpaces"].ToString();
+        numberOfParkingSpaces = int.Parse(parkingSpaces);
+    }
 }
 
-<h1>This vehicle was checked out</h1>
+<br />
+<h2>This vehicle was checked out</h2>
 
 <div>
     <h4>Session</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MemberId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MemberId)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.VehicleId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleId)
+        <dd class="col-sm-10">
+            @ViewData["ConfirmedCheckedOutVehicleId"]
         </dd>
-        
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParkingSpaces)
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["SessionNumberOfParkingSpaces"].ToString() 
+            @*@numberOfParkingSpaces*@
+        </dd>
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TimeOfArrival)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TimeOfArrival)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TimeOfDeparture)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TimeOfDeparture)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
 </div>
 <div>
+    <a asp-action="Receipt" asp-route-id="@Model?.Id">Receipt</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

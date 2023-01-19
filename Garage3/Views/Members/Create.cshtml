@@ -1,10 +1,10 @@
 ﻿@model Garage3.Models.Member
 
 @{
-    ViewData["Title"] = "Create member";    
+    ViewData["Title"] = "Create a membership account";
 }
-
-<h1>Create</h1>
+<br />
+<h2>Create a membership account</h2>
 
 <div id="persNoError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
      A member with the following  Personal number:
@@ -42,7 +42,7 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" id="createButton" class="btn btn-primary" />
+                <input type="submit" value="Create" id="createButton" />
             </div>
         </form>
     </div>
@@ -55,7 +55,7 @@
 @if (ViewData["DoubleName"] != null)
 {
     <script>
-        function showError()
+        function showErrorDoubleName()
         {
             element.removeAttribute("hidden");
         }
@@ -63,7 +63,7 @@
         let button = document.querySelector("#createButton")
         button.addEventListener('submit', showError)
 
-        showError();
+        showErrorDoubleName();
     </script>
 }
 

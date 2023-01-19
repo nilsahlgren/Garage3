@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Garage3.Models.Session>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sessions Overview";
+    ViewData["NotParked"] = "Not Parked";
 }
-
-<h1>Index</h1>
+Create a membership account
+<h2>Sessions Overview</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Members" asp-action="SelectMemberForCheckin">Park another vehicle</a>
 </p>
 <table class="table">
     <thead>
@@ -34,36 +35,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <th>
-                @Html.DisplayFor(modelItem => item.MemberId)
-            </th>
-            <th>
-                @Html.DisplayFor(modelItem => item.VehicleId)
-            </th>
-            <th>
-        
-                @foreach (var p in item.ParkingSpaces)
-                {
-                    @Html.DisplayFor(modelItem => p.Id)
-                } 
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOfArrival)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOfDeparture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.MemberId)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.VehicleId)
+                </th>
+                <th>
+                    @foreach (var p in item.ParkingSpaces)
+                    {
+                        if (p.Id > 0)
+                        {
+                            @Html.DisplayFor(modelItem => p.Id) <text>&nbsp;</text>
+                        }                      
+                    }
+
+                    @if (item.ParkingSpaces.Count == 0)
+                    {
+                        @ViewData["NotParked"]
+                    }
+                    
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfArrival)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfDeparture)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
