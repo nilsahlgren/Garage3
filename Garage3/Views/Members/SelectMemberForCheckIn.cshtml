@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Select which member to check in a vehicle for";
 }
-
-<h1>Select which member to check in a vehicle for</h1>
+<br />
+<h2>Select a member (+18 years) to check in a vehicle </h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Register membership</a>
 </p>
 <table class="table">
     <thead>
@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    <a asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Park registered vehicle</a>
+                    <a class="btn btn-primary" asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Park registered vehicle</a>
                 </td>
             </tr>
         }

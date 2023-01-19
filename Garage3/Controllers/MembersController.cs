@@ -24,7 +24,11 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
+            var member = _context.Member.Include(m => m.Vehicles);
+            
             return _context.Member != null ?
+                        View(await member.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Member'  is null.");
                         View(await _context.Member.ToListAsync()) :
                         Problem("Entity set 'Garage3Context.Member' is null.");
         }

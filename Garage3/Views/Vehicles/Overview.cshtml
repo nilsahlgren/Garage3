@@ -3,20 +3,20 @@
 @{
     ViewData["Title"] = "Vehicle Overview";
 }
+<br />
+<h2>Vehicle Overview</h2>
 
-<h1>Vehicle Overview</h1>
-
-<form asp-controller="Vehicles" asp-action="Overview">
+<form  asp-controller="Vehicles" asp-action="Overview">
     <p>
         Search by Vehicle Type: <input type="text" name="VehicleTypeName" />
         <input type="submit" value="Search" />
     </p>
 </form>
 
-<form asp-controller="Vehicles" asp-action="Overview">
+<form  asp-controller="Vehicles" asp-action="Overview">
     <p>
         Search by Registration Number: <input type="text" name="RegNo" />
-        <input type="submit" value="Search" />
+        <input  type="submit" value="Search" />
     </p>
 </form>
 
@@ -67,9 +67,9 @@
                 @Html.DisplayFor(modelItem => item.NoOfWheels)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                   @* <a class="btn btn-primary"  asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
 }
