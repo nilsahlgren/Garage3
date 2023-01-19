@@ -183,6 +183,8 @@ namespace Garage3.Controllers
                     }
                 }
 
+                TempData["MemberCreated"] = member.PersNo;
+                
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -223,6 +225,7 @@ namespace Garage3.Controllers
             {
                 try
                 {
+                    TempData["MemberEdited"] = "MemberEdited";
                     _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
@@ -237,6 +240,7 @@ namespace Garage3.Controllers
                         throw;
                     }
                 }
+                TempData["MemberEdited"] = "MemberEdited";
                 return RedirectToAction(nameof(Index));
             }
             return View(member);

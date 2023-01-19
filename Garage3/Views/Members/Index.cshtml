@@ -2,6 +2,20 @@
 
 @{
     ViewData["Title"] = "Members";
+
+    string memberAdded =string.Empty;
+    string memberEdited = string.Empty;
+    
+    if (TempData.ContainsKey("MemberCreated"))
+    {
+        memberAdded= TempData["MemberCreated"].ToString();
+  
+    }
+    if (TempData.ContainsKey("MemberUpdated"))
+    {
+        memberEdited = TempData["MemberEdited"].ToString();
+
+    }
 }
 
 <br />
@@ -11,8 +25,19 @@
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 
-
-<table class="table">
+<div id="personalNumberCreated"  class="alert alert-success alert-dismissible fade show" role="alert">
+     A membership account with the following Personal number:
+    <strong>@memberAdded</strong> has been created. <br /> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>
+<div id="personalNumberUpdated" class="alert alert-info alert-dismissible fade show" role="alert">
+     A membership account with the following Personal number:
+    <strong>@memberEdited</strong> has been created. <br />
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>
+<table class="table" id="clickTable">
     <thead>
         <tr>
             <th>
@@ -58,3 +83,52 @@
         }
     </tbody>
 </table>
+@if (memberAdded.Length > 10)
+{
+    <script>
+
+        function showAddedMember() {
+            element.removeAttribute("hidden");
+
+        }
+
+        let element = document.querySelector("#personalNumberCreated");
+        let table = document.querySelector("#clickTable")
+        table.addEventListener('click', showAddedMember)
+
+        showAddedMember();
+    </script>
+}
+
+else
+{
+    <script>
+        document.querySelector("#personalNumberCreated").setAttribute("hidden", "hidden");
+        
+    </script>
+}
+@if (memberEdited.Length > 5)
+{
+    <script>
+
+        function showUpdatedMember() {
+            element.removeAttribute("hidden");
+
+        }
+
+        let element = document.querySelector("#personalNumberUpdated");
+        let table = document.querySelector("#clickTable")
+        table.addEventListener('click', showUpdatedMember)
+
+        showUpdatedMember();
+    </script>
+}
+
+else
+{
+    <script>
+        document.querySelector("#personalNumberUpdated").setAttribute("hidden", "hidden");
+
+    </script>
+}
+
