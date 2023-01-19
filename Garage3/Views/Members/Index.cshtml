@@ -3,21 +3,25 @@
 @{
     ViewData["Title"] = "Members";
 }
+
 <br />
 <h2>Members</h2>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-</p>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.PersNo)
-                @Html.DisplayNameFor(model => model.FirstName)
+
+            </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
@@ -25,9 +29,9 @@
                 Registered Vehicles
             </th>
             <th></th>
-                Full name
-            </th>
         </tr>
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -44,15 +48,13 @@
                     @Html.DisplayFor(modelItem => item.Vehicles.Count)
                 </td>
                 <td>
-                    
+
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                   @* <a class="btn btn-primary" asp-controller="Members" asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Vehicles to check in</a> |
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Member Details</a> |
-                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                </td>
+                    @* <a class="btn btn-primary" asp-controller="Members" asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Vehicles to check in</a> |
+                <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Member Details</a> |
+                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+               </td>
             </tr>
         }
-        </tr>
-}
     </tbody>
 </table>
