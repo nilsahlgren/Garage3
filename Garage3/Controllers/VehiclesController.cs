@@ -28,23 +28,46 @@ namespace Garage3.Controllers
         }
 
 
-        
 
+        
         public async Task<IActionResult> Overview(string regNo, string vehicleTypeName)
         {
-            var vehicles = from v in _context.Vehicle
+            var sessions = _context.Session.Include(s => s.ParkingSpaces).Where(s => s.VehicleId != null);
+
+            List<VehicleViewModel> vehicleVMList = new List<VehicleViewModel>();
+
+            foreach (Session s in sessions)
+            {
+                var member = _context.Member.FirstOrDefault(m => m.Id == s.MemberId);
+                var vehicle = _context.Vehicle.FirstOrDefault(v => v.Id == s.VehicleId);
+                VehicleViewModel vehicleVM = new VehicleViewModel();
+                vehicleVM.VehicleTypeName = vehicle.VehicleTypeName;
+                vehicleVM.RegNo = vehicle.RegNo;
+                vehicleVM.ParkTime = DateTime.Now - s.TimeOfArrival;
+                vehicleVM.Owner = member.FirstName + " " + member.LastName;
+                //MembershipLevel = member.MembershipLevel;
+                string parkingSpaces = "";
+                foreach (ParkingSpace p in s.ParkingSpaces)
+                {
+                    parkingSpaces += p.Id + ", ";
+                }
+                parkingSpaces = parkingSpaces.Substring(0, (parkingSpaces.Length - 2));
+                vehicleVM.ParkingSpaces = parkingSpaces;
+
+                vehicleVMList.Add(vehicleVM);
+            }
 
             if (!String.IsNullOrEmpty(regNo))
             {
-                vehicles = vehicles.Where(v => v.RegNo.Contains(regNo));
+                vehicleVMList = vehicleVMList.Where(v => v.RegNo.Contains(regNo)).ToList();
             }
             
             if (!String.IsNullOrEmpty(vehicleTypeName))
             {
-                vehicles = vehicles.Where(v => v.VehicleTypeName.Contains(vehicleTypeName));
+                vehicleVMList = vehicleVMList.Where(v => v.VehicleTypeName.Contains(vehicleTypeName)).ToList();
             }
 
-            return View(await vehicles.ToListAsync());
+            return View(vehicleVMList);
         }
 
         public async Task<IActionResult> SelectVehicleForCheckout()
