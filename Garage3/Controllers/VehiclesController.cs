@@ -33,7 +33,7 @@ namespace Garage3.Controllers
         public async Task<IActionResult> Overview(string regNo, string vehicleTypeName)
         {
             var vehicles = from v in _context.Vehicle
-                           select v;
+
             if (!String.IsNullOrEmpty(regNo))
             {
                 vehicles = vehicles.Where(v => v.RegNo.Contains(regNo));
