@@ -28,9 +28,7 @@ namespace Garage3.Controllers
             
             return _context.Member != null ?
                         View(await member.ToListAsync()) :
-                        Problem("Entity set 'Garage3Context.Member'  is null.");
-                        View(await _context.Member.ToListAsync()) :
-                        Problem("Entity set 'Garage3Context.Member' is null.");
+                        Problem("Entity set 'Garage3Context.Member'  is null.");                        
         }
 
         // Members Overview with search for PersNo and LastName
