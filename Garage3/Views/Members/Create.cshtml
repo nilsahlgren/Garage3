@@ -14,7 +14,7 @@
 </div>
 
 <div id="nameError" hidden="hidden" class="alert alert-warning alert-dismissible fade show" role="alert">
-     A member is not allowed to have same first and last names. Change either from
+     A member is not allowed to have the same first and last names. Change from
     <strong>@ViewData["DoubleName"]</strong> to something else.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
     </button>
@@ -61,7 +61,7 @@
         }
         let element = document.querySelector("#nameError");
         let button = document.querySelector("#createButton")
-        button.addEventListener('submit', showError)
+        button.addEventListener('submit', showErrorDoubleName)
 
         showErrorDoubleName();
     </script>

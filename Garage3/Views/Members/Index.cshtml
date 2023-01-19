@@ -44,11 +44,12 @@
                     @Html.DisplayFor(modelItem => item.Vehicles.Count)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-controller="Members" asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Vehicle collection</a> |
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-@*                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Member Details</a> |
-*@@*                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-*@                </td>
+                    
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                   @* <a class="btn btn-primary" asp-controller="Members" asp-action="SelectVehicleForCheckIn" asp-route-id="@item.Id">Vehicles to check in</a> |
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Member Details</a> |
+                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
             </tr>
         }
     </tbody>
