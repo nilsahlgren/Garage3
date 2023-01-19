@@ -4,7 +4,8 @@
     ViewData["Title"] = "Member vehicles";
 }
 
-<h1>Vehicles</h1>
+<br />
+<h2>Vehicles</h2>
 <h3>Registered to selected member</h3>
 
 <table class="table">
@@ -46,6 +47,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NoOfWheels)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Vehicles.Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

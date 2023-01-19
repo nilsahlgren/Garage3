@@ -4,7 +4,8 @@
     ViewData["Title"] = "MemberOverview";
 }
 
-<h1>Member overview</h1>
+<br />
+<h2>Member Overview</h2>
 
 <form asp-controller="Members" asp-action="MemberOverview">
     <p>
@@ -56,9 +57,10 @@
                     @item.Vehicles.Count
                 </td>
                 <td>
-                    <a asp-action="MemberVehicleList" asp-route-id="@item.Id">List vehicles</a> |
+                    <a class="btn btn-primary" asp-action="MemberVehicleList" asp-route-id="@item.Id">List vehicles</a>
+                    @*<a asp-action="MemberVehicleList" asp-route-id="@item.Id">List vehicles</a> |
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }
