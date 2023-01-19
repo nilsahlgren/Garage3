@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
 using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace Garage3.Controllers
 {
@@ -43,7 +44,7 @@ namespace Garage3.Controllers
             }
             return View(await members
                 .Include(veh => veh.Vehicles)
-                .OrderBy(name => name.FirstName)
+                .OrderBy(name => name.FirstName.Substring(0, 2))
                 .ToListAsync());
         }
 
