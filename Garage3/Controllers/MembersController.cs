@@ -9,6 +9,7 @@ using Garage3.Data;
 using Garage3.Models;
 using System.Globalization;
 using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Garage3.Controllers
 {
@@ -24,6 +25,19 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
+            if (TempData.ContainsKey("created"))
+            {
+                ViewData["ShowElement"] = TempData["created"];
+            }
+            if (TempData.ContainsKey("deleted"))
+            {
+                ViewData["ShowElement"] = TempData["deleted"];
+            }
+            if (TempData.ContainsKey("updated"))
+            {
+                ViewData["ShowElement"] = TempData["updated"];
+            }
+
             var member = _context.Member.Include(m => m.Vehicles);
             
             return _context.Member != null ?
@@ -182,9 +196,10 @@ namespace Garage3.Controllers
                         return View(member);
                     }
                 }
-
-                TempData["MemberCreated"] = member.PersNo;
-                
+              
+                TempData["created"]= "created";
+                TempData["PersonalNumber"] = member.PersNo;
+                TempData.Keep();
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -225,7 +240,8 @@ namespace Garage3.Controllers
             {
                 try
                 {
-                    TempData["MemberEdited"] = "MemberEdited";
+                    TempData["updated"] = "updated";
+                    TempData["PersonalNumber"] = member.PersNo;
                     _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
@@ -240,7 +256,6 @@ namespace Garage3.Controllers
                         throw;
                     }
                 }
-                TempData["MemberEdited"] = "MemberEdited";
                 return RedirectToAction(nameof(Index));
             }
             return View(member);
@@ -276,6 +291,8 @@ namespace Garage3.Controllers
             var member = await _context.Member.FindAsync(id);
             if (member != null)
             {
+                TempData["PersonalNumber"] = member.PersNo;
+                TempData["deleted"] = "deleted";
                 _context.Member.Remove(member);
             }
 

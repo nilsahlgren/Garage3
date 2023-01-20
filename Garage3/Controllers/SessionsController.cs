@@ -22,6 +22,7 @@ namespace Garage3.Controllers
         // GET: Sessions
         public async Task<IActionResult> Index()
         {
+
             return _context.Session != null ?
                         View(await _context.Session 
                         .OrderBy(s => s.TimeOfDeparture)

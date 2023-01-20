@@ -22,6 +22,18 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
+            if (TempData.ContainsKey("created"))
+            {
+                ViewData["ShowElement"] = TempData["created"];
+            }
+            if (TempData.ContainsKey("checkedout"))
+            {
+                ViewData["ShowElement"] = TempData["checkedout"];
+            }
+            if (TempData.ContainsKey("updated"))
+            {
+                ViewData["ShowElement"] = TempData["updated"];
+            }
             return _context.Vehicle != null ?
                         View(await _context.Vehicle.ToListAsync()) :
                         Problem("Entity set 'Garage3Context.Vehicle'  is null.");
