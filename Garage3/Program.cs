@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Garage3.Data;
+using Garage3.Models;
+
 namespace Garage3
 {
     public class Program
@@ -15,6 +17,24 @@ namespace Garage3
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            int parkingSpaces = Int32.Parse(builder.Configuration.GetSection("ParkingSpaces").Value);
+            
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+
+                SeedData.Initialize(services, parkingSpaces);
+                }
+                catch(Exception ex)
+                {
+
+
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
