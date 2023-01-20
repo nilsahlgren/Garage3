@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Parked Vehicle Overview";
 }
+<br />
+<h2>Vehicle Overview</h2>
 
 <h1>Parked Vehicle Overview</h1>
 
@@ -13,10 +15,10 @@
     </p>
 </form>
 
-<form asp-controller="Vehicles" asp-action="Overview">
+<form  asp-controller="Vehicles" asp-action="Overview">
     <p>
         Search by Registration Number: <input type="text" name="RegNo" />
-        <input type="submit" value="Search" />
+        <input  type="submit" value="Search" />
     </p>
 </form>
 

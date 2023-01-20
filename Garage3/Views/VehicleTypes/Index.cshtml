@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Garage3.Models.VehicleType>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vehicle Types";
 }
-
-<h1>Index</h1>
+<br />
+<h2>Vehicle Types</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -22,18 +22,20 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+@*                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+*@                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -22,9 +22,9 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-              return _context.Vehicle != null ? 
-                          View(await _context.Vehicle.ToListAsync()) :
-                          Problem("Entity set 'Garage3Context.Vehicle'  is null.");
+            return _context.Vehicle != null ?
+                        View(await _context.Vehicle.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Vehicle'  is null.");
         }
 
 
@@ -61,7 +61,7 @@ namespace Garage3.Controllers
             {
                 vehicleVMList = vehicleVMList.Where(v => v.RegNo.Contains(regNo)).ToList();
             }
-            
+
             if (!String.IsNullOrEmpty(vehicleTypeName))
             {
                 vehicleVMList = vehicleVMList.Where(v => v.VehicleTypeName.Contains(vehicleTypeName)).ToList();
@@ -72,8 +72,20 @@ namespace Garage3.Controllers
 
         public async Task<IActionResult> SelectVehicleForCheckout()
         {
-            var allVehicles = _context.Vehicle.Include(v => v.Session);
-            var parkedVehicles = allVehicles.Where(v => v.Session != null);
+            var allVehicles = _context.Vehicle
+                .Include(v => v.Session);
+            var parkedVehicles = allVehicles
+                .OrderBy(v => v.RegNo)
+                .Where(v => v.Session.TimeOfDeparture
+                .ToString()
+                .StartsWith("000"));
+
+
+            //Note: If one sets vehicle.Session to null (In the SessionsController...), the session.VehicleId
+            //is set to null in the Session table in the database (Yes, it took quite some investigation to find this out...)
+            //In order to keep the sessions table intact its neccesary to instead look at the value
+            //for session.TimeOfDeparture to get the ACTIVE Sessions.
+            //var parkedVehicles = allVehicles.Where(v => v.Session != null);
             return View(await parkedVehicles.ToListAsync());
         }
 
@@ -81,6 +93,15 @@ namespace Garage3.Controllers
         {
             var allVehicles = _context.Vehicle.Include(v => v.Session);
             var selectedVehicle = await allVehicles.FirstOrDefaultAsync(v => v.Id == id);
+            var vehicleSize = await _context.VehicleType.FirstOrDefaultAsync(vs => vs.Name == selectedVehicle.VehicleTypeName);
+
+            //NOTE: this i NULL!
+            // var parkingSpaces = selectedVehicle.Session.ParkingSpaces; 
+            //NO parking spaces are added to Vehicle.Session.
+
+            ViewData["ConfirmedCheckedOutVehicleId"] = selectedVehicle?.Id;
+            TempData["ConfirmedCheckedOutVehicleSize"] = vehicleSize.Size;
+
             return View(selectedVehicle);
         }
 
@@ -225,14 +246,14 @@ namespace Garage3.Controllers
             {
                 _context.Vehicle.Remove(vehicle);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool VehicleExists(int id)
         {
-          return (_context.Vehicle?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Vehicle?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

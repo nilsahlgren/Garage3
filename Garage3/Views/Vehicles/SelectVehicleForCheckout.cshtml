@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Select Vehicle";
 }
-
-<h1>Select Vehicle for Checkout</h1>
+<br />
+<h2>Select Vehicle for Checkout</h2>
 
 <table class="table">
     <thead>
@@ -12,6 +12,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.MemberId)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleTypeName)
+            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.RegNo)
             </th>
@@ -29,13 +33,16 @@
                     @Html.DisplayFor(modelItem => item.MemberId)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.VehicleTypeName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.RegNo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Session.TimeOfArrival)
                 </td>
                 <td>
-                    <a asp-action="ConfirmCheckout" asp-route-id="@item.Id">Select</a>
+                    <a class="btn btn-primary" asp-action="ConfirmCheckout" asp-route-id="@item.Id">Select</a>
                 </td>
             </tr>
         }

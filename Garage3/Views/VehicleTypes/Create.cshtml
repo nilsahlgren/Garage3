@@ -1,12 +1,11 @@
 ﻿@model Garage3.Models.VehicleType
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Vehicle Type";
 }
 
-<h1>Create</h1>
+<h2>Create Vehicle Type</h2>
 
-<h4>VehicleType</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,14 +22,14 @@
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary top-bottom-margin" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary"  asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

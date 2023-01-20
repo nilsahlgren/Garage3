@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
 using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace Garage3.Controllers
 {
@@ -23,9 +24,11 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
+            var member = _context.Member.Include(m => m.Vehicles);
+            
             return _context.Member != null ?
-                        View(await _context.Member.ToListAsync()) :
-                        Problem("Entity set 'Garage3Context.Member' is null.");
+                        View(await member.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Member'  is null.");                        
         }
 
         // Members Overview with search for PersNo and LastName
@@ -43,7 +46,7 @@ namespace Garage3.Controllers
             }
             return View(await members
                 .Include(veh => veh.Vehicles)
-                .OrderBy(name => name.FirstName)
+                .OrderBy(name => name.FirstName.Substring(0, 2))
                 .ToListAsync());
         }
 
