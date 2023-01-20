@@ -13,6 +13,7 @@ namespace Garage3
             builder.Services.AddDbContext<Garage3Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Garage3Context") ?? throw new InvalidOperationException("Connection string 'Garage3Context' not found.")));
 
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
