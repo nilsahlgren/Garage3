@@ -40,7 +40,7 @@
             <p class="card-text leftRight"><span>Entry time:</span> <span>@Html.DisplayFor(model => model.TimeOfArrival)</span></p>
             <p class="card-text leftRight"><span>Exit time:</span>  <span>@DateTime.Now</span></p>
             <p class="card-text leftRight"><span>Duration:</span>   <span>@ViewData["ParkTimeInDays"] days @ViewData["ParkTimeInHours"] hours @ViewData["ParkTimeInMinutes"] minutes</span></p>
-            <p class="card-text leftRight"><span>In minutes:</span> <span>@ViewData["ParkTimeInMinutes"]</span></p>
+            <p class="card-text leftRight"><span>In minutes:</span> <span>@ViewData["TotalParkTimeInMinutes"]</span></p>
             <p class="card-text leftRight"><span>Membership ID:</span><span><span style="color:royalblue; font-weight: bolder;text-align:right;">@vehicle?.MemberId</span>-@ViewData["ParkTimeInMicroseconds"] 400-@Html.DisplayFor(model => model.Id)</span></p>
             <p class="card-text leftRight">
                 <span>Starting cost:</span>

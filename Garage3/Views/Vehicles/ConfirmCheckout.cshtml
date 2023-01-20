@@ -59,6 +59,6 @@
     <form asp-controller="Sessions" asp-action="Checkout" asp-route-id="@Model.Session.Id">
         <input type="hidden" asp-for="@Model.Session.Id" />
         <input type="submit" value="Confirm" class="btn btn-danger" /> |
-        <a class="btn btn-primary" asp-controller="Vehicles" asp-action="SelectVehicleForCheckout">Select Vehicle for Checkout</a>
+        <a class="btn btn-primary" asp-controller="Vehicles" asp-action="SelectVehicleForCheckout">Cancel</a>
     </form>
 </div>
