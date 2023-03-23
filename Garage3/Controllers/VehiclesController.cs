@@ -63,7 +63,7 @@ namespace Garage3.Controllers
                 {
                     parkingSpaces += p.Id + ", ";
                 }
-                parkingSpaces = parkingSpaces.Substring(0, (parkingSpaces.Length - 2));
+                parkingSpaces = parkingSpaces.Substring(0, parkingSpaces.Length);
                 vehicleVM.ParkingSpaces = parkingSpaces;
 
                 vehicleVMList.Add(vehicleVM);
